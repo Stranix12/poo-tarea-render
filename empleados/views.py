@@ -4,10 +4,35 @@ from .forms import CargoForm, EmpleadoForm
 from django.db.models.deletion import ProtectedError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
+def login_view(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse('inicio'))
+        else:
+            error = 'Usuario o contraseña incorrectos'
+            return render(request, 'empleados/login.html', {'error': error})
+
+    return render(request, 'empleados/login.html')
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('login'))
+
+@login_required(login_url='login')
 def inicio(request):
     return render(request, 'empleados/inicio.html')
 
+@login_required(login_url='login')
 def cargo_eliminar(request, pk):
     cargo = get_object_or_404(Cargo, pk=pk)
     empleados_asociados = cargo.empleado_set.all()
@@ -26,10 +51,12 @@ def cargo_eliminar(request, pk):
         'empleados_asociados': empleados_asociados,
     })
 
+@login_required(login_url='login')
 def cargo_listar(request):
     cargos = Cargo.objects.all()
     return render(request, 'empleados/cargos/listar.html', {'cargos': cargos})
 
+@login_required(login_url='login')
 def cargo_crear(request):
     if request.method == 'POST':
         form = CargoForm(request.POST)
@@ -40,6 +67,7 @@ def cargo_crear(request):
         form = CargoForm()
     return render(request, 'empleados/cargos/formulario.html', {'form': form})
 
+@login_required(login_url='login')
 def cargo_editar(request, pk):
     cargo = get_object_or_404(Cargo, pk=pk)
     if request.method == 'POST':
@@ -53,10 +81,12 @@ def cargo_editar(request, pk):
 
 # ==================== EMPLEADOS ====================
 
+@login_required(login_url='login')
 def empleado_listar(request):
     empleados = Empleado.objects.all()
     return render(request, 'empleados/empleados/listar.html', {'empleados': empleados})
 
+@login_required(login_url='login')
 def empleado_crear(request):
     if request.method == 'POST':
         form = EmpleadoForm(request.POST)
@@ -67,6 +97,7 @@ def empleado_crear(request):
         form = EmpleadoForm()
     return render(request, 'empleados/empleados/formulario.html', {'form': form})
 
+@login_required(login_url='login')
 def empleado_editar(request, pk):
     empleado = get_object_or_404(Empleado, pk=pk)
     if request.method == 'POST':
@@ -78,6 +109,7 @@ def empleado_editar(request, pk):
         form = EmpleadoForm(instance=empleado)
     return render(request, 'empleados/empleados/formulario.html', {'form': form})
 
+@login_required(login_url='login')
 def empleado_eliminar(request, pk):
     empleado = get_object_or_404(Empleado, pk=pk)
     if request.method == 'POST':

@@ -113,6 +113,11 @@
             <a class="nav-btn" href="{% url 'empleado_listar' %}">
                 <i class="bi bi-person-badge me-1"></i>Empleados
             </a>
+            {% if user.is_authenticated %}
+            <a class="nav-btn" href="{% url 'logout' %}" style="background-color: rgba(233, 69, 96, 0.2); border-color: #e94560;">
+                <i class="bi bi-box-arrow-right me-1"></i>Salir
+            </a>
+            {% endif %}
         </div>
     </nav>
 
