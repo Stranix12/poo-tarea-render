@@ -1,0 +1,23 @@
+{% extends 'empleados/base.html' %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-5 text-center">
+        <i class="bi bi-trash-fill" style="font-size:3.5rem; color:#e94560"></i>
+        <h2 class="page-title mt-2">Eliminar Empleado</h2>
+        <p class="text-muted mt-3">
+            ¿Está seguro que desea eliminar al empleado <strong>{{ empleado }}</strong>?
+            Esta acción no se puede deshacer.
+        </p>
+        <form method="POST" class="d-flex justify-content-center gap-2 mt-3">
+            {% csrf_token %}
+            <button type="submit" class="btn-eliminar btn">
+                <i class="bi bi-trash-fill me-1"></i>Sí, eliminar
+            </button>
+            <a href="{% url 'empleado_listar' %}" class="btn-cancelar btn">
+                <i class="bi bi-x-lg me-1"></i>Cancelar
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

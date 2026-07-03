@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\Davis\\\\Documents\\\\poovideo\" -Depth 2 | Where-Object { $_.PSIsContainer } | Select-Object FullName)",
+      "PowerShell(cd \"c:\\\\Users\\\\Davis\\\\Documents\\\\poovideo\"; $env:DJANGO_SETTINGS_MODULE=\"djangocrud.settings\"; .\\\\CRUD\\\\Scripts\\\\python.exe manage.py check 2>&1)",
+      "PowerShell($gitUrl = \"https://github.com/git-for-windows/git/releases/download/v2.43.0.windows.1/Git-2.43.0-64-bit.exe\"; $gitPath = \"$env:TEMP\\\\GitInstaller.exe\"; Invoke-WebRequest -Uri $gitUrl -OutFile $gitPath -UseBasicParsing; Write-Host \"Descargado, instalando...\"; & $gitPath /VERYSILENT /NORESTART; Start-Sleep -Seconds 10; Write-Host \"Git instalado\")",
+      "PowerShell(& \"C:\\\\Program Files\\\\Git\\\\bin\\\\git.exe\" --version)"
+    ]
+  }
+}

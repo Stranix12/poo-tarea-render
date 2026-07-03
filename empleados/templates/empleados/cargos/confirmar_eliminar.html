@@ -1,0 +1,63 @@
+{% extends 'empleados/base.html' %}
+
+{% block contenido %}
+<div class="row justify-content-center">
+    <div class="col-md-6 text-center">
+
+        {% if error %}
+        <div class="mb-3">
+            <i class="bi bi-x-circle-fill" style="font-size:3.5rem; color:#e94560"></i>
+            <h2 class="page-title mt-2">No se puede eliminar</h2>
+        </div>
+        <div class="alert alert-danger text-start">
+            <strong>{{ error }}</strong>
+            <hr>
+            <p class="mb-1"><i class="bi bi-people-fill me-1"></i>Empleados asignados:</p>
+            <ul class="mb-0">
+                {% for emp in empleados_asociados %}
+                <li>{{ emp }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <a href="{% url 'cargo_listar' %}" class="btn-cancelar btn mt-2">
+            <i class="bi bi-arrow-left me-1"></i>Volver
+        </a>
+
+        {% elif empleados_asociados %}
+        <div class="mb-3">
+            <i class="bi bi-exclamation-triangle-fill" style="font-size:3.5rem; color:#f0a500"></i>
+            <h2 class="page-title mt-2">Cargo en uso</h2>
+        </div>
+        <div class="alert alert-warning text-start">
+            <strong>Este cargo tiene {{ empleados_asociados.count }} empleado(s) asignado(s).</strong>
+            <ul class="mt-2 mb-1">
+                {% for emp in empleados_asociados %}
+                <li>{{ emp }}</li>
+                {% endfor %}
+            </ul>
+            <p class="mb-0">Reasigna o elimina los empleados antes de eliminar este cargo.</p>
+        </div>
+        <a href="{% url 'cargo_listar' %}" class="btn-cancelar btn">
+            <i class="bi bi-arrow-left me-1"></i>Volver
+        </a>
+
+        {% else %}
+        <div class="mb-3">
+            <i class="bi bi-trash-fill" style="font-size:3.5rem; color:#e94560"></i>
+            <h2 class="page-title mt-2">Eliminar Cargo</h2>
+        </div>
+        <p class="text-muted">¿Está seguro que desea eliminar el cargo <strong>{{ cargo.nombre }}</strong>? Esta acción no se puede deshacer.</p>
+        <form method="POST" class="d-flex justify-content-center gap-2 mt-3">
+            {% csrf_token %}
+            <button type="submit" class="btn-eliminar btn">
+                <i class="bi bi-trash-fill me-1"></i>Sí, eliminar
+            </button>
+            <a href="{% url 'cargo_listar' %}" class="btn-cancelar btn">
+                <i class="bi bi-x-lg me-1"></i>Cancelar
+            </a>
+        </form>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

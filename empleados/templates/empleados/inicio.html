@@ -1,0 +1,74 @@
+{% extends 'empleados/base.html' %}
+
+{% block contenido %}
+<div class="text-center">
+    <h1 class="page-title mb-4">
+        <i class="bi bi-house-fill me-2" style="color:#e94560"></i>Bienvenido
+    </h1>
+    <p class="text-muted mb-5">Sistema de gestión de Empleados y Cargos</p>
+
+    <div class="row g-4 justify-content-center">
+        <!-- VBF -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm h-100" style="border-top: 4px solid #e94560;">
+                <div class="card-body p-4">
+                    <i class="bi bi-function" style="font-size:2rem; color:#e94560;"></i>
+                    <h5 class="card-title mt-3 fw-bold">Vistas Basadas en Funciones</h5>
+                    <p class="card-text text-muted small">Implementación tradicional de Django con funciones Python explícitas.</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'cargo_listar' %}" class="btn-nuevo btn mb-2">
+                            <i class="bi bi-briefcase me-1"></i>Gestionar Cargos
+                        </a>
+                        <a href="{% url 'empleado_listar' %}" class="btn-nuevo btn">
+                            <i class="bi bi-person-badge me-1"></i>Gestionar Empleados
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VBC -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm h-100" style="border-top: 4px solid #1a73e8;">
+                <div class="card-body p-4">
+                    <i class="bi bi-diagram-3" style="font-size:2rem; color:#1a73e8;"></i>
+                    <h5 class="card-title mt-3 fw-bold">Vistas Basadas en Clases</h5>
+                    <p class="card-text text-muted small">Implementación moderna usando clases genéricas de Django.</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'vbc_cargo_listar' %}" class="btn mb-2" style="background: linear-gradient(135deg, #1a73e8, #1a5ac2); border: none; color: white; border-radius: 10px; padding: 8px 20px; font-weight: 600;">
+                            <i class="bi bi-briefcase me-1"></i>Gestionar Cargos
+                        </a>
+                        <a href="{% url 'vbc_empleado_listar' %}" class="btn" style="background: linear-gradient(135deg, #1a73e8, #1a5ac2); border: none; color: white; border-radius: 10px; padding: 8px 20px; font-weight: 600;">
+                            <i class="bi bi-person-badge me-1"></i>Gestionar Empleados
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Accesos rápidos -->
+    <div class="row mt-5">
+        <div class="col-md-8 mx-auto">
+            <h5 class="text-muted mb-3">Accesos rápidos</h5>
+            <div class="d-flex justify-content-center gap-2 flex-wrap">
+                <a href="{% url 'cargo_listar' %}" class="badge bg-secondary text-decoration-none p-2">
+                    <i class="bi bi-briefcase me-1"></i>Cargos (VBF)
+                </a>
+                <a href="{% url 'empleado_listar' %}" class="badge bg-secondary text-decoration-none p-2">
+                    <i class="bi bi-person-badge me-1"></i>Empleados (VBF)
+                </a>
+                <a href="{% url 'vbc_cargo_listar' %}" class="badge bg-info text-decoration-none p-2">
+                    <i class="bi bi-briefcase me-1"></i>Cargos (VBC)
+                </a>
+                <a href="{% url 'vbc_empleado_listar' %}" class="badge bg-info text-decoration-none p-2">
+                    <i class="bi bi-person-badge me-1"></i>Empleados (VBC)
+                </a>
+                <a href="{% url 'admin:index' %}" class="badge bg-dark text-decoration-none p-2">
+                    <i class="bi bi-shield-lock me-1"></i>Panel Admin
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
